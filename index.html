@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#1F3864">
+<title>Portfólio de Imóveis · CR88 — Acesso restrito</title>
+<style>
+:root{--navy:#1F3864;--navy2:#16294a;--ink:#1b2330;--muted:#667085;--red:#9C1C1C;--wa:#1f9d55}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:16px;
+font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--navy),var(--navy2))}
+.card{background:#fff;max-width:420px;width:100%;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.logo{width:44px;height:44px;border:2px solid #5b9bd5;border-radius:10px;display:grid;place-items:center;font:700 18px Georgia,serif;color:var(--navy);margin-bottom:14px}
+h1{font:700 22px Georgia,serif;margin:0 0 6px;color:var(--navy)}p{margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.5}
+label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}
+input{width:100%;padding:12px 14px;border:1px solid #cfd6e0;border-radius:10px;font-size:16px}
+input:focus{outline:2px solid #2E74B5;border-color:transparent}
+button,.wa{display:block;width:100%;margin-top:12px;padding:12px;border:0;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+button{background:var(--navy);color:#fff}button:disabled{opacity:.6;cursor:wait}
+.msg{display:none;margin-top:16px;padding:14px;border-radius:10px;background:#fdf1f1;border:1px solid #f0c9c9;font-size:14px;line-height:1.5;color:#5a1414}
+.msg b{color:var(--red)}.wa{background:var(--wa);color:#fff}
+.foot{margin-top:18px;font-size:11.5px;color:var(--muted);text-align:center}
+</style></head><body>
+<form class="card" id="f">
+  <div class="logo">CR</div>
+  <h1>Acesso restrito</h1>
+  <p>O Portfólio de Imóveis CR88 é exclusivo para investidores e parceiros autorizados. Informe seu número de WhatsApp para entrar.</p>
+  <label for="tel">WhatsApp (com DDD)</label>
+  <input id="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="(31) 99999-9999" required>
+  <button id="bt" type="submit">Entrar</button>
+  <div class="msg" id="msg">
+    <b id="mt">Número não autorizado.</b><br>
+    Para solicitar o desbloqueio (válido por 72 horas), envie uma mensagem <b>deste número</b> para o WhatsApp <b>(31) 99700-7005</b>. Assim que for liberado, volte a esta página e entre com o mesmo número.
+    <a class="wa" id="wa" href="#" target="_blank" rel="noopener">Solicitar acesso pelo WhatsApp</a>
+  </div>
+  <div class="foot">CR88 · Sete Lagoas/MG</div>
+</form>
+<script>
+(function(){
+const ACL=[{"x": 0, "w": "FkIcCp3HMwPt4CqedgEdOt/LDvNPVk4sZ2dFnWi8LBQdfpyrjPKNhsFJjHuI4aMps8qgJ5UeaBlk4QMb"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260923154228", WA="5531997007005";
+const u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)), te=new TextEncoder();
+const norm=t=>{let d=(t||'').replace(/\D/g,'');if(d.length>=12&&d.startsWith('55'))d=d.slice(2);d=d.replace(/^0+/,'');if(d.length===10&&'6789'.includes(d[2]))d=d.slice(0,2)+'9'+d.slice(2);return d;};
+const fmt=n=>n.length>=10?'('+n.slice(0,2)+') '+n.slice(2,-4)+'-'+n.slice(-4):n;
+const f=document.getElementById('f'),tel=document.getElementById('tel'),bt=document.getElementById('bt'),msg=document.getElementById('msg'),wa=document.getElementById('wa');
+const bin=fetch('site.bin?v='+VER).then(r=>{if(!r.ok)throw new Error('site.bin');return r.arrayBuffer();});bin.catch(()=>{});
+async function masterKey(n){
+  const base=await crypto.subtle.importKey('raw',te.encode(n),'PBKDF2',false,['deriveKey']);
+  const k=await crypto.subtle.deriveKey({name:'PBKDF2',salt:u8(SALT),iterations:ITER,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+  let expired=false;
+  for(const it of ACL){const b=u8(it.w);let raw;
+    try{raw=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:b.slice(0,12),additionalData:te.encode(String(it.x))},k,b.slice(12)));}catch(e){continue;}
+    if(it.x&&Date.now()>it.x){expired=true;continue;}
+    return raw;}
+  return expired?'expired':null;
+}
+async function open_(raw){
+  const key=await crypto.subtle.importKey('raw',raw,'AES-GCM',false,['decrypt']);
+  const b=new Uint8Array(await bin);
+  const gz=await crypto.subtle.decrypt({name:'AES-GCM',iv:b.slice(0,12)},key,b.slice(12));
+  const html=await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+  const kb64=btoa(String.fromCharCode(...raw));
+  const hook='<script>(function(){const K=Uint8Array.from(atob("'+kb64+'"),c=>c.charCodeAt(0));'+
+   'async function dl(h,n){try{const base=h.split("/").pop().replace(/\\.pdf$/i,"");const r=await fetch("pdfx/"+encodeURIComponent(decodeURIComponent(base))+".bin?v='+VER+'");const b=new Uint8Array(await r.arrayBuffer());'+
+   'const k=await crypto.subtle.importKey("raw",K,"AES-GCM",false,["decrypt"]);const p=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12)},k,b.slice(12));'+
+   'const url=URL.createObjectURL(new Blob([p],{type:"application/pdf"}));const a=document.createElement("a");a.href=url;a.download=n;a.setAttribute("data-dec","1");document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){alert("Não foi possível baixar o PDF.");}}'+
+   'document.addEventListener("click",function(e){const a=e.target&&e.target.closest?e.target.closest("a[href]"):null;if(!a||a.hasAttribute("data-dec"))return;const h=a.getAttribute("href");if(!/^pdf\\/.+\\.pdf$/i.test(h))return;e.preventDefault();e.stopPropagation();dl(h,a.getAttribute("download")||h.split("/").pop());},true);})();<\/script>';
+  document.open();document.write(html.replace(/<head>/i,'<head><meta name="robots" content="noindex,nofollow">'+hook));document.close();
+}
+async function tryNum(t,silent){
+  const n=norm(t);
+  if(n.length<10){if(!silent)alert('Informe o número com DDD, ex.: (31) 99999-9999');return;}
+  bt.disabled=true;bt.textContent='Verificando…';msg.style.display='none';
+  try{
+    const raw=await masterKey(n);
+    if(!raw||raw==='expired'){
+      try{localStorage.removeItem('cr88_tel');}catch(e){}
+      if(!silent){msg.style.display='block';
+        document.getElementById('mt').textContent=raw==='expired'?'Seu acesso de 72 horas expirou.':'Número não autorizado.';
+        wa.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Olá, Ricardo! Solicito acesso ao Portfólio de Imóveis CR88. Meu WhatsApp: '+fmt(n));}
+      bt.disabled=false;bt.textContent='Entrar';return;}
+    try{localStorage.setItem('cr88_tel',n);}catch(e){}
+    bt.textContent='Carregando portfólio…';await open_(raw);
+  }catch(e){bt.disabled=false;bt.textContent='Entrar';alert('Falha ao carregar. Verifique a conexão e tente novamente.');}
+}
+f.addEventListener('submit',e=>{e.preventDefault();tryNum(tel.value,false);});
+let s=null;try{s=localStorage.getItem('cr88_tel');}catch(e){}
+if(s){tel.value=fmt(s);tryNum(s,true);}
+})();
+</script>
+</body></html>
