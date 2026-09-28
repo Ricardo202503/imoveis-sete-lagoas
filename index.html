@@ -35,7 +35,7 @@ button{background:var(--navy);color:#fff}button:disabled{opacity:.6;cursor:wait}
 </form>
 <script>
 (function(){
-const ACL=[{"x": 1790884909961, "w": "w1u/nUnof1VZ6LX6ZtQYUPZMmn/yrQFqAVgU3p0ywWafKZVULqsse0f9ii6GApSQEXpG3nGsZmQl9c/h"}, {"x": 0, "w": "69QQYPELLC1krZg6Bre2LXxRTN3CA3FyJ2Vdn8QBzwsWLU5NPnfXWoLZWOYQRgzF5Ql3Ih+Sya8ME74f"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260928200448", WA="5531997007005";
+const ACL=[{"x": 0, "w": "+3hmgdfknVQVUwXOXv+tGq57v4q1jKjSHdI+8lv1qkMqI06BHy2CGD3qdcbDCRaiyjYq7/O+HHjDBDod"}, {"x": 1790884909961, "w": "utVDIF9bxyLs17XAwqdl5FYxzsGV8MIg7gJbFL6ysZhQ2jJS9yyyodKYZ01ZGfoi7gLFSEXkT5ERC83S"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260928201256", WA="5531997007005";
 const u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)), te=new TextEncoder();
 const norm=t=>{let d=(t||'').replace(/\D/g,'');if(d.length>=12&&d.startsWith('55'))d=d.slice(2);d=d.replace(/^0+/,'');if(d.length===10&&'6789'.includes(d[2]))d=d.slice(0,2)+'9'+d.slice(2);return d;};
 const fmt=n=>n.length>=10?'('+n.slice(0,2)+') '+n.slice(2,-4)+'-'+n.slice(-4):n;
