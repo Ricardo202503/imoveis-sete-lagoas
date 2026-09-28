@@ -35,7 +35,7 @@ button{background:var(--navy);color:#fff}button:disabled{opacity:.6;cursor:wait}
 </form>
 <script>
 (function(){
-const ACL=[{"x": 0, "w": "7lHlwC5fGGxRE7I51rCh+kTbIPjeSj8QhwksxzlxPoT/hCZkmgQHANePAZEzy94WaHhoqYz3TGfePg3T"}, {"x": 1790884909961, "w": "HUR25vWoo0ajgaHFTKjZYPTkaNuFHMnVvUayEb3HaeeVOqac3LsmISrB3yDqJSzvy32sbAgR6QOXcyHz"}, {"x": 1790887976488, "w": "H+7PN0/TqeK3g9E8bZB6FSt1ujLAkjyYSjKOdeqjokO3VwVzlCV36ff/vUC/Hk4TCo/Z+FzZegh5wRDg"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260928205258", WA="5531997007005";
+const ACL=[{"x": 1790887976488, "w": "Fl0RHuIRuenLOEfR0oUPfWJlzKhtJMeDOVOt9xd8uGym9GKzgVGnpZ0Tz7yjzbKTNKzzpAn0VcDW8VHq"}, {"x": 0, "w": "QbJ5bJaeThxV5gU9Yk7VSCDBTM29Fe/kIplko6cdeN6VD7+1lJ4/rvFUfPpQ54kTVlpwKaWnK5LSTmxu"}, {"x": 1790888259084, "w": "qzf69ChQvs/48JRE3G+DzYwqu8KH9Oyimyc87t3u3lta4HSCy5GcpPWZol47rV3Bmy7P3wZ6XuORCk/A"}, {"x": 1790884909961, "w": "cnouEW+SBwHKSGkAVm7Q0nuviqIQyI4loYJFF9KonKh/Lg2egzr3ueKhr2CzYaD87n2rlOlWfpYGdFbN"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260928205739", WA="5531997007005";
 const u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)), te=new TextEncoder();
 const norm=t=>{let d=(t||'').replace(/\D/g,'');if(d.length>=12&&d.startsWith('55'))d=d.slice(2);d=d.replace(/^0+/,'');if(d.length===10&&'6789'.includes(d[2]))d=d.slice(0,2)+'9'+d.slice(2);return d;};
 const fmt=n=>n.length>=10?'('+n.slice(0,2)+') '+n.slice(2,-4)+'-'+n.slice(-4):n;
