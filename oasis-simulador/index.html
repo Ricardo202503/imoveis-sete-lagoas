@@ -35,7 +35,7 @@ button{background:var(--navy);color:#fff}button:disabled{opacity:.6;cursor:wait}
 </form>
 <script>
 (function(){
-const ACL=[{"x": 0, "w": "7lHlwC5fGGxRE7I51rCh+kTbIPjeSj8QhwksxzlxPoT/hCZkmgQHANePAZEzy94WaHhoqYz3TGfePg3T"}, {"x": 1790884909961, "w": "HUR25vWoo0ajgaHFTKjZYPTkaNuFHMnVvUayEb3HaeeVOqac3LsmISrB3yDqJSzvy32sbAgR6QOXcyHz"}, {"x": 1790887976488, "w": "H+7PN0/TqeK3g9E8bZB6FSt1ujLAkjyYSjKOdeqjokO3VwVzlCV36ff/vUC/Hk4TCo/Z+FzZegh5wRDg"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260928205258", WA="5531997007005";
+const ACL=[{"x": 1790887976488, "w": "ZBIIEoeRw00H8hkGOuOgWmd7Lwv71dOaKVATTWwgb4Urit2buBV2GFRhlHbiEK7EIlgx6Zdn+HDX7YlX"}, {"x": 1790888259084, "w": "Z+4Rrw4f7T1OedWOb293iIQNSoZWcU1RH6a/X2WS4PxmXsd9Tr1hYK/LQYFL7GQFmLyQT8fpbpGwps+z"}, {"x": 0, "w": "KU6JW5GugFMCuQJOAmpIqHAhiynQ7PLJWOlff9nWsoy9/bO5tUshnU8NdvuRIUZ7iSnOx5JlhshIagIY"}, {"x": 1790884909961, "w": "DtRiGJngIFqONr1OL8Zd+m/NyGzZj2ISGHI2vsnv1inFaslc04asNgE5iPQJQ21ltep2cYiQuLA0Zc8f"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260929184556", WA="5531997007005", OPENK="4sUJ60cnUkrTFSXdc6RG8p8f89JH0A6Nmkwxuuc1VjM=";
 const u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)), te=new TextEncoder();
 const norm=t=>{let d=(t||'').replace(/\D/g,'');if(d.length>=12&&d.startsWith('55'))d=d.slice(2);d=d.replace(/^0+/,'');if(d.length===10&&'6789'.includes(d[2]))d=d.slice(0,2)+'9'+d.slice(2);return d;};
 const fmt=n=>n.length>=10?'('+n.slice(0,2)+') '+n.slice(2,-4)+'-'+n.slice(-4):n;
@@ -67,9 +67,10 @@ async function open_(raw){
 async function tryNum(t,silent){
   const n=norm(t);
   if(n.length<10){if(!silent)alert('Informe o número com DDD, ex.: (31) 99999-9999');return;}
+  if(OPENK&&!silent){try{window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Olá, Ricardo! Acessei o Portfólio de Imóveis CR88. Meu WhatsApp: '+fmt(n)),'_blank','noopener');}catch(e){}}
   bt.disabled=true;bt.textContent='Verificando…';msg.style.display='none';
   try{
-    const raw=await masterKey(n);
+    const raw=OPENK?u8(OPENK):await masterKey(n);
     if(!raw||raw==='expired'){
       try{localStorage.removeItem('cr88_tel');}catch(e){}
       if(!silent){msg.style.display='block';
