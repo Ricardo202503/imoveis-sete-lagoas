@@ -35,7 +35,7 @@ button{background:var(--navy);color:#fff}button:disabled{opacity:.6;cursor:wait}
 </form>
 <script>
 (function(){
-const ACL=[{"x": 1790887976488, "w": "ZBIIEoeRw00H8hkGOuOgWmd7Lwv71dOaKVATTWwgb4Urit2buBV2GFRhlHbiEK7EIlgx6Zdn+HDX7YlX"}, {"x": 1790888259084, "w": "Z+4Rrw4f7T1OedWOb293iIQNSoZWcU1RH6a/X2WS4PxmXsd9Tr1hYK/LQYFL7GQFmLyQT8fpbpGwps+z"}, {"x": 0, "w": "KU6JW5GugFMCuQJOAmpIqHAhiynQ7PLJWOlff9nWsoy9/bO5tUshnU8NdvuRIUZ7iSnOx5JlhshIagIY"}, {"x": 1790884909961, "w": "DtRiGJngIFqONr1OL8Zd+m/NyGzZj2ISGHI2vsnv1inFaslc04asNgE5iPQJQ21ltep2cYiQuLA0Zc8f"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260929184556", WA="5531997007005", OPENK="4sUJ60cnUkrTFSXdc6RG8p8f89JH0A6Nmkwxuuc1VjM=";
+const ACL=[{"x": 1790887976488, "w": "LM3lrGUY0/iyVgrslVpGBSy8WuaBZUT7f1Ulbo2Q7vyDV/wRYjIypDs8qYk348YmmucJxR18I/QeifNO"}, {"x": 1790884909961, "w": "QrW+61yY0kKSiHwV0YOFO4u6GTwBzF22un03m0rty4G/lWcvdACKWoVNkRQQar540nDYBOq8aD1NciJ/"}, {"x": 0, "w": "ffP3eWu2W++tV+wEoil9d/j7NCrfskLLfp8/7FuhxF1BML6/HYUclNN0LoEF7JElLs60786UpuGuB9xV"}, {"x": 1790888259084, "w": "Zg2e/ce6iK+nzgo0hg9+LV2H/qWNsOBQSDYIIRwJKgfwYIAKvc819yCOqplnjq9dku2zLHljU0XIAkWX"}], SALT="Rdpv2NzOHLLnf8ECo3symw==", ITER=250000, VER="20260929203938", WA="5531997007005", OPENK="4sUJ60cnUkrTFSXdc6RG8p8f89JH0A6Nmkwxuuc1VjM=";
 const u8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)), te=new TextEncoder();
 const norm=t=>{let d=(t||'').replace(/\D/g,'');if(d.length>=12&&d.startsWith('55'))d=d.slice(2);d=d.replace(/^0+/,'');if(d.length===10&&'6789'.includes(d[2]))d=d.slice(0,2)+'9'+d.slice(2);return d;};
 const fmt=n=>n.length>=10?'('+n.slice(0,2)+') '+n.slice(2,-4)+'-'+n.slice(-4):n;
